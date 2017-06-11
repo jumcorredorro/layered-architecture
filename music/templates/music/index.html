@@ -1,5 +1,4 @@
 {% extends 'music/base.html' %}
-
 {% block body%}
   {% if all_albums %}
     <h3>Here are all albums</h3>
@@ -15,6 +14,16 @@
             <h2>{{album.album_title}}</h2>
             <h4>{{album.artist}}</h4>
             <a href="{% url 'music:detail' album.id %}"> {{album.album_title}}</a>
+            {% load permission_tags %}
+            {% if user|has_role:'administrator' %}
+              <h2>the user is an admin</h2>
+            {% endif %}
+            {% if user|has_role:'coordinador' %}
+              <h2>the user is an coordinador</h2>
+            {% endif %}
+            {% if user|has_role:'consulta' %}
+              <h2>the user is an consulta</h2>
+            {% endif %}
             <form action="{% url 'music:album-delete' album.id%}" method="post" style="display: inline;">
               {% csrf_token %}
               <input type="hidden" name="album_id" value="{{album.id}}">

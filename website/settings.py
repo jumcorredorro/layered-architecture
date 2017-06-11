@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rolepermissions',
 ]
 
 MIDDLEWARE = [
@@ -67,7 +68,7 @@ TEMPLATES = [
         },
     },
 ]
-
+ROLEPERMISSIONS_MODULE = 'website.roles'
 WSGI_APPLICATION = 'website.wsgi.application'
 
 

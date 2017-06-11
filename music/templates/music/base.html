@@ -47,12 +47,21 @@
 
           <ul class="nav navbar-nav navbar-right">
             <li class="">
+              <a href="{% url 'music:index' %}">
+                {% if user.is_authenticated %}
+                  <p>Welcome, {{ user.get_username }}.</p>
+                {% else %}
+                  <p>Welcome, new user.</p>
+                {% endif %}
+              </a>
+            </li>
+            <li class="">
               <a href="{% url 'music:album-add' %}">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add Album
               </a>
             </li>
             <li class="">
-              <a href="#">
+              <a href="{% url 'music:logout' %}">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;Logout
               </a>
             </li>

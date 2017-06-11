@@ -1,11 +1,12 @@
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.shortcuts import render,redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import View
 from .models import Album
-from .forms import UserForm
+from .forms import UserForm, UserLogin
+from rolepermissions.mixins import HasPermissionsMixin
 
 
 class IndexView(generic.ListView):
@@ -19,7 +20,8 @@ class DetailView(generic.DetailView):
     model = Album
     template_name = 'music/detail.html'
 
-class AlbumCreate(CreateView):
+class AlbumCreate(HasPermissionsMixin, CreateView):
+    required_permission = 'add_album'
     model = Album
     fields = ['artist', 'album_title','genre', 'album_logo']
 
@@ -59,5 +61,30 @@ class UserFormView(View):
                 if user.is_active:
                     login(request,user)
                     return redirect('music:index')
-                    
+
         return render(request,self.template_name,{'form': form})
+
+class LoginView(View):
+    form_class = UserLogin
+    template_name = 'music/login.html'
+    #display blank form
+    def get(self,request):
+        form = self.form_class(None)
+        return render(request,self.template_name,{'form': form})
+    #process form dta
+    def post(self,request):
+        form = self.form_class(request.POST)
+        username = request.POST['username']
+        password = request.POST['password']
+        #return User objetcs if credentials are correct
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request,user)
+            return redirect('music:index')
+        return render(request,self.template_name,{'form': form})
+
+def logout_view(request):
+    form = UserLogin(None)
+    template_name = 'music/login.html'
+    logout(request)
+    return render(request,template_name,{'form': form})
