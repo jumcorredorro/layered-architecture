@@ -4,6 +4,7 @@ from . import views
 app_name = 'music'
 
 urlpatterns = [
+    url(r'^ajax/validate_username/$', views.validate_username, name='validate_username'),
     # /music/
     url(r'^$', views.IndexView.as_view(), name='index'),
     #/music/register

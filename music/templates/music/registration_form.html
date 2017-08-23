@@ -1,6 +1,27 @@
 {% extends 'music/base.html' %}
 {% block title %}Register{% endblock %}
 
+
+{% block javascript %}
+<script>
+ $("#id_username").change(function () {
+   var form = $(this).closest("form");
+   $.ajax({
+     url: form.attr("data-validate-username-url"),
+     data: form.serialize(),
+     dataType: 'json',
+     success: function (data) {
+       if (data.is_taken) {
+         alert(data.error_message);
+       }
+     }
+   });
+
+ });
+</script>
+{% endblock %}
+
+
 {% block body %}
   <div class="container-fluid">
 
@@ -10,7 +31,7 @@
         <div class="panel panel-default">
           <div class="panel-body">
             <h3>Create a New Account</h3>
-            <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal" action="" method="post" enctype="multipart/form-data" data-validate-username-url="{% url 'music:validate_username' %}">
                 {% csrf_token %}
                 {% include 'music/form-template.html' %}
                 <div class="form-group">

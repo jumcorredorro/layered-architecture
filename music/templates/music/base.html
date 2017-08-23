@@ -50,6 +50,9 @@
               <a href="{% url 'music:index' %}">
                 {% if user.is_authenticated %}
                   <p>Welcome, {{ user.get_username }}.</p>
+                  {% if user.userprofile.avatar %}
+                    <img src="{{ user.userprofile.avatar.url }}" height="42" width="42" >
+                  {% endif %}
                 {% else %}
                   <p>Welcome, new user.</p>
                 {% endif %}
@@ -72,5 +75,10 @@
     </nav>
     {% block body%}
     {% endblock %}
+    <footer>
+      ...
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    {% block javascript %}{% endblock %}
   </body>
 </html>
