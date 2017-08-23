@@ -1,0 +1,9 @@
+*.pyc
+*.DS_store
+*.py~
+*.*~
+.idea
+*.vscode
+*__pycache__
+*__init__.py
+*/migrations/

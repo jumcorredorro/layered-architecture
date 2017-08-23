@@ -8,7 +8,6 @@ from django.views.generic import View
 from django.http import JsonResponse
 from .models import Album
 from .forms import UserLogin, ProfileForm, UserForm
-from rolepermissions.mixins import HasPermissionsMixin
 
 def validate_username(request):
     username = request.GET.get('username', None)
@@ -30,7 +29,6 @@ class DetailView(generic.DetailView):
     model = Album
     template_name = 'music/detail.html'
 
-#class AlbumCreate(HasPermissionsMixin, CreateView):
 class AlbumCreate(CreateView):
     required_permission = 'add_album'
     model = Album
