@@ -11,7 +11,7 @@ class UserForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['avatar', 'role']
+        fields = ['avatar']
 
 class UserLogin(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)

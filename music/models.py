@@ -7,7 +7,7 @@ from django.dispatch import receiver
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = models.ImageField()
-    role = models.CharField(max_length=30)
+
 
 
 @receiver(post_save, sender=User)
